@@ -24,8 +24,11 @@ shopify app init --template=https://github.com/Shopify/shopify-app-template-reac
 
 ### Local Development
 
+Install dependencies with pnpm, then start the project script:
+
 ```shell
-shopify app dev
+pnpm install
+pnpm dev
 ```
 
 Press P to open the URL to your app. Once you click install, you can start development.
@@ -96,21 +99,7 @@ To use one of these, you can use a different [datasource provider](https://www.p
 
 ### Build
 
-Build the app by running the command below with the package manager of your choice:
-
-Using yarn:
-
-```shell
-yarn build
-```
-
-Using npm:
-
-```shell
-npm run build
-```
-
-Using pnpm:
+Build the app with pnpm:
 
 ```shell
 pnpm run build
@@ -137,7 +126,11 @@ If you get an error like:
 The table `main.Session` does not exist in the current database.
 ```
 
-Create the database for Prisma. Run the `setup` script in `package.json` using `npm`, `yarn` or `pnpm`.
+Create the database for Prisma by running the `setup` script:
+
+```shell
+pnpm run setup
+```
 
 ### Navigating/redirecting breaks an embedded app
 
@@ -153,7 +146,7 @@ This only applies if your app is embedded, which it will be by default.
 
 If you are registering webhooks in the `afterAuth` hook, using `shopify.registerWebhooks`, you may find that your subscriptions aren't being updated.
 
-Instead of using the `afterAuth` hook declare app-specific webhooks in the `shopify.app.toml` file. This approach is easier since Shopify will automatically sync changes every time you run `deploy` (e.g: `npm run deploy`). Please read these guides to understand more:
+Instead of using the `afterAuth` hook declare app-specific webhooks in the `shopify.app.toml` file. This approach is easier since Shopify will automatically sync changes every time you run `deploy` (e.g: `pnpm run deploy`). Please read these guides to understand more:
 
 1. [app-specific vs shop-specific webhooks](https://shopify.dev/docs/apps/build/webhooks/subscribe#app-specific-subscriptions)
 2. [Create a subscription tutorial](https://shopify.dev/docs/apps/build/webhooks/subscribe/get-started?deliveryMethod=https)

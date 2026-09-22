@@ -1,23 +1,26 @@
 {
   "name": "app",
   "private": true,
+  "packageManager": "pnpm@10.32.0",
   "scripts": {
     "build": "react-router build",
-    "dev": "shopify app dev",
+    "dev": "mkdir -p .agent && shopify app dev --config development 2>&1 | tee .agent/dev.log",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
-    "deploy": "shopify app deploy",
+    "deploy": "shopify app deploy --config shopify.app.toml",
     "config:use": "shopify app config use",
     "env": "shopify app env",
     "start": "react-router-serve ./build/server/index.js",
-    "docker-start": "npm run setup && npm run start",
+    "docker-start": "pnpm run setup && pnpm run start",
     "setup": "prisma generate && prisma migrate deploy",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "shopify": "shopify",
     "prisma": "prisma",
     "graphql-codegen": "graphql-codegen",
     "vite": "vite",
-    "typecheck": "react-router typegen && tsc --noEmit"
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "type": "module",
   "engines": {
@@ -42,6 +45,7 @@
   "devDependencies": {
     "@shopify/api-codegen-preset": "^2.0.0",
     "@shopify/polaris-types": "1.0.1",
+    "@tailwindcss/vite": "4.3.2",
     "@types/eslint": "^9.6.1",
     "@types/node": "^25.5.2",
     "@types/react": "^18.3.25",
@@ -56,8 +60,10 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "graphql-config": "^5.1.1",
     "prettier": "^3.6.2",
+    "tailwindcss": "4.3.2",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^4.1.9"
   },
   "workspaces": {
     "packages": [

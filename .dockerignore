@@ -1,3 +1,11 @@
+.agent
+.agents
 .cache
+.git
+.github
+.shopify
+.env
+.env.*
+!.env.example
 build
 node_modules
