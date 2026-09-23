@@ -41,6 +41,10 @@ To collect behavior data in the authenticated embedded app, set `CLARITY_PROJECT
 
 Clarity records page interactions and session replays. Review the pages and data your app collects, and mask sensitive content before enabling it. For visitors in the EEA, UK, or Switzerland, Clarity requires a consent signal for its full feature set. Connect your consent manager to Clarity's [Consent API V2](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2), sending `granted` or `denied` for both `analytics_Storage` and `ad_Storage` when consent changes. Do not send `granted` until the visitor has consented.
 
+### Optional operations notifications
+
+Set `OPS_NOTIFIER_URL`, `OPS_NOTIFIER_SECRET`, and `OPS_NOTIFIER_APP_ID` to send signed app installation and uninstallation events to the shared operations notifier. Use a unique lowercase source-app slug for the app ID; it is not the Shopify numeric app ID. Register the same slug and signing secret with the notifier service. Each app created from this template should receive its own slug and secret. Leave the secret or slug empty to disable notifications. Install events are sent once per installation, and notifier failures do not block Shopify authentication or webhook handling.
+
 ### Authenticating and querying data
 
 To authenticate and query data you can use the `shopify` const that is exported from `/app/shopify.server.js`:

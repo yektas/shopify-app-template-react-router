@@ -32,3 +32,9 @@ model Session {
   refreshToken        String?
   refreshTokenExpires DateTime?
 }
+
+model OpsInstallation {
+  shop          String    @id
+  installedAt   DateTime?
+  uninstalledAt DateTime?
+}
