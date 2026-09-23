@@ -35,11 +35,11 @@ Press P to open the URL to your app. Once you click install, you can start devel
 
 Local development is powered by [the Shopify CLI](https://shopify.dev/docs/apps/tools/cli). It logs into your account, connects to an app, provides environment variables, updates remote config, creates a tunnel and provides commands to generate extensions.
 
-### Optional Microsoft Clarity analytics
+### Optional PostHog analytics
 
-To collect behavior data in the authenticated embedded app, set `CLARITY_PROJECT_ID` in the app's server environment to the project ID from Microsoft Clarity. The tracker loads only in the `/app` area and remains disabled when the variable is unset. Use a separate Clarity project ID for each app created from this template so recordings aren't mixed together. See [.env.example](.env.example) for the optional local setting.
+To collect behavior data in the authenticated embedded app, set `POSTHOG_PROJECT_API_KEY` in the app's server environment to the public project key from PostHog. The tracker loads only in the `/app` area, identifies the current Shopify shop by its domain, and remains disabled when the key is unset. `POSTHOG_API_HOST` can be set to choose a PostHog ingestion host; it defaults to `https://eu.i.posthog.com`.
 
-Clarity records page interactions and session replays. Review the pages and data your app collects, and mask sensitive content before enabling it. For visitors in the EEA, UK, or Switzerland, Clarity requires a consent signal for its full feature set. Connect your consent manager to Clarity's [Consent API V2](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2), sending `granted` or `denied` for both `analytics_Storage` and `ad_Storage` when consent changes. Do not send `granted` until the visitor has consented.
+PostHog collects pageviews and, when enabled in your project, session replay. Review the pages and data your app collects, and configure the appropriate consent and privacy settings in PostHog before enabling session replay. See [.env.example](.env.example) for the optional local settings.
 
 ### Optional operations notifications
 

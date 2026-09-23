@@ -1,57 +1,24 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "react-router";
-import { useEffect } from "react";
 import { Outlet, useLoaderData, useRouteError } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { AppProvider } from "@shopify/shopify-app-react-router/react";
 
+import { PostHogAnalytics } from "../components/posthog-analytics";
+import { getPostHogConfig } from "../lib/posthog.server";
 import { authenticate } from "../shopify.server";
 
-type ClarityClient = ((...args: unknown[]) => void) & { q?: unknown[][] };
-
-declare global {
-  interface Window {
-    clarity?: ClarityClient;
-  }
-}
-
-const CLARITY_SCRIPT_ID = "microsoft-clarity-script";
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await authenticate.admin(request);
+  const { session } = await authenticate.admin(request);
 
   // oxlint-disable-next-line no-undef
   return {
     apiKey: process.env.SHOPIFY_API_KEY || "",
-    // The Clarity project ID is public and only enables tracking when configured.
-    // oxlint-disable-next-line no-undef
-    clarityProjectId: process.env.CLARITY_PROJECT_ID || "",
+    posthog: getPostHogConfig({ shop: session.shop }),
   };
 };
 
 export default function App() {
-  const { apiKey, clarityProjectId } = useLoaderData<typeof loader>();
-
-  useEffect(() => {
-    if (!clarityProjectId || document.getElementById(CLARITY_SCRIPT_ID)) return;
-
-    if (!window.clarity) {
-      const queue: unknown[][] = [];
-      window.clarity = Object.assign(
-        (...args: unknown[]) => {
-          queue.push(args);
-        },
-        { q: queue },
-      );
-    }
-
-    const script = document.createElement("script");
-    script.id = CLARITY_SCRIPT_ID;
-    script.async = true;
-    script.src = `https://www.clarity.ms/tag/${encodeURIComponent(
-      clarityProjectId,
-    )}`;
-    document.head.appendChild(script);
-  }, [clarityProjectId]);
+  const { apiKey, posthog } = useLoaderData<typeof loader>();
 
   return (
     <AppProvider embedded apiKey={apiKey}>
@@ -60,6 +27,7 @@ export default function App() {
         <s-link href="/app/additional">Additional page</s-link>
       </s-app-nav>
       <Outlet />
+      <PostHogAnalytics config={posthog} />
     </AppProvider>
   );
 }
