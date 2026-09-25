@@ -45,6 +45,12 @@ PostHog collects pageviews and, when enabled in your project, session replay. Re
 
 Set `OPS_NOTIFIER_URL`, `OPS_NOTIFIER_SECRET`, and `OPS_NOTIFIER_APP_ID` to send signed app installation and uninstallation events to the shared operations notifier. Use a unique lowercase source-app slug for the app ID; it is not the Shopify numeric app ID. Register the same slug and signing secret with the notifier service. Each app created from this template should receive its own slug and secret. Leave the secret or slug empty to disable notifications. Install events are sent once per installation, and notifier failures do not block Shopify authentication or webhook handling.
 
+### Optional Shopify App Pricing
+
+For a public app, configure plans in the Shopify Partner Dashboard and set SHOPIFY_APP_HANDLE, SHOPIFY_PARTNER_ORGANIZATION_ID, SHOPIFY_PARTNER_APP_ID, and SHOPIFY_PARTNER_API_TOKEN in the app's server environment. The Partner API token needs the **Manage apps** permission. SHOPIFY_PARTNER_API_VERSION defaults to 2026-07.
+
+The embedded app's Plans page opens Shopify's hosted plan management page and reads the current subscription through the Partner API. It stores a local snapshot and exposes requirePlanHandle from app/models/billing.server.ts for server-side feature gates. Pass the Shopify App Pricing item handles configured for the app's plans. The template does not automatically require a paid plan or define plan tiers; add gates when the app's pricing and features are known. The Plans page remains usable during development before Partner API settings are configured. See the [Shopify App Pricing guide](https://shopify.dev/docs/apps/launch/billing/shopify-app-pricing) for plan setup and eligibility details.
+
 ### Authenticating and querying data
 
 To authenticate and query data you can use the `shopify` const that is exported from `/app/shopify.server.js`:

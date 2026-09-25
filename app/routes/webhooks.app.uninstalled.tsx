@@ -1,6 +1,7 @@
 import type { ActionFunctionArgs } from "react-router";
 import { authenticate } from "../shopify.server";
 import db from "../db.server";
+import { markBillingUninstalled } from "../models/billing.server";
 import {
   markAppUninstalled,
   notifyAppUninstalled,
@@ -18,6 +19,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     await db.session.deleteMany({ where: { shop } });
   }
 
+  await markBillingUninstalled(shop);
   await markAppUninstalled(shop);
   await notifyAppUninstalled(shop, webhookId, payload);
 

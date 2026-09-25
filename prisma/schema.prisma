@@ -38,3 +38,16 @@ model OpsInstallation {
   installedAt   DateTime?
   uninstalledAt DateTime?
 }
+
+model AppBillingState {
+  shop                    String    @id
+  activeSubscription      Boolean   @default(false)
+  planItemHandlesJson     String    @default("[]")
+  planItemDescriptionsJson String  @default("[]")
+  trialEndsAt             DateTime?
+  currentPeriodEnd        DateTime?
+  lastReconciledAt        DateTime?
+  billingUnavailableSince DateTime?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+}
