@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "shopify-onboarding-dev": {
+      "source": "Shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-onboarding-dev/SKILL.md",
+      "computedHash": "77cf2d83b46e7fdc3138d610c3ee955506793730a9798aea68547ffd549f355d"
+    }
+  }
+}

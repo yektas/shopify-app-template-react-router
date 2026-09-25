@@ -1,0 +1,9 @@
+╭─ error ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  `app config link` requires additional flags in non-interactive terminal     │
+│  environments.                                                               │
+│                                                                              │
+│  Run `shopify app config link --client-id` with the required values, or run  │
+│   the command in an interactive terminal.                                    │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
