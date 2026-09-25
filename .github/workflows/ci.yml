@@ -28,7 +28,7 @@ jobs:
         if: ${{ !startsWith(github.head_ref || github.ref_name, 'javascript') }}
         run: pnpm run typecheck
 
-      - name: Run ESLint
+      - name: Run Oxlint
         run: pnpm run lint
 
       - name: Validate Prisma
